@@ -15,5 +15,8 @@
     "csgogsi-socket": "^2.7.4",
     "express": "^4.19.2",
     "simple-websocket": "^9.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }

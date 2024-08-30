@@ -1,0 +1,8 @@
+.obs-healthblock {
+    width: 52px;
+    height: 16px;
+    .obs-hpbar1, .obs-hpbar2, .obs-hpbar3, .obs-hpbar4 {
+        width: 100%;
+        height: 100%;
+    }
+}

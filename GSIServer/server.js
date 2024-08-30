@@ -1,9 +1,11 @@
+
 const express = require('express');
 const cors = require('cors');
 const { WebSocketServer } = require('ws');
 
 const app = express();
 const port = 3001;
+// const GSI = new CSGOGSI;
 
 app.use(express.json());
 app.use(cors());
@@ -14,7 +16,15 @@ app.get('/', (request, response) => {
 });
 
 app.post('/', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
+    // GSI.digest(req.body);
+
+    wss.clients.forEach(client => {
+        if(client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(req.body))
+        }
+    })
+
     res.status(200).json({ message: "received data!", id: 1 });
 });
 
