@@ -2,6 +2,13 @@ import React, { useContext } from 'react'
 import { DataContext } from '../DataContext'
 import { Health } from '../assets/Icons';
 import './styles/Observed.css'
+import { CSGOGSI } from 'csgogsi';
+
+const gsi = new CSGOGSI;
+
+gsi.on('roundEnd', score => {
+    console.log(`Team ${score.winner.name} win!`)
+})
 
 export const Player = () => {
 
