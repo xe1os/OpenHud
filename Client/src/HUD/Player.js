@@ -1,19 +1,8 @@
 import React, { useContext } from 'react'
-import { DataContext } from '../DataContext'
 import { Health } from '../assets/Icons';
 import './styles/Observed.css'
-import { CSGOGSI } from 'csgogsi';
 
-const gsi = new CSGOGSI;
-
-gsi.on('roundEnd', score => {
-    console.log(`Team ${score.winner.name} win!`)
-})
-
-export const Player = () => {
-
-    const { playerData } = useContext(DataContext);
-
+export const Player = ({playerData}) => {
     const getHealthBarWidth = (health, min, max) => {
 		if (health > min && health <= max) {
 			return health + "%";
@@ -30,8 +19,6 @@ export const Player = () => {
     if (!playerData) {
         return <div>Loading...</div>;
     }
-
-    const observedPlayer = playerData ? playerData : '';
     const name = playerData ? playerData.name : 'Alias';
     const health = playerData ? playerData.state.health : '';
     const teamColor = playerData ? playerData.team === "T" ? "bg-TColor" : "bg-CTColor" : "bg-MainPanel";
@@ -47,9 +34,9 @@ export const Player = () => {
 
   return (
     <div>
-        <div id='Test' className='fixed top-2 w-96 h-96 bg-slate-700 text-white flex justify-center items-center'>
+        {/* <div id='Test' className='absolute top-2 w-20 h-5 bg-slate-700 text-white flex justify-center items-center'>
             {roundKills}
-        </div>
+        </div> */}
 
 
         <div id='Observed-Player' className='flex h-[90vh] justify-center items-end'>

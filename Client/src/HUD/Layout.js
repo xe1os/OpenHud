@@ -1,10 +1,28 @@
-import React from 'react'
-import { Player } from './Player'
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+import { AllPlayers } from './AllPlayers';
+import { Player } from './Player';
+
+const socket = io('http://localhost:4000');
 
 export const Layout = () => {
+  const [gameData, setGameData] = useState({});
+
+  useEffect(() => {
+    socket.on('update', (data) => {
+      setGameData(data);
+    });
+
+    return () => {
+      socket.off('update');
+    };
+  }, []);
+
   return (
     <div>
-        <Player/>
+      {gameData && (
+        <><Player playerData={gameData.player} /><AllPlayers data={gameData.allplayers} /></>
+      )}
     </div>
-  )
-}
+  );
+};

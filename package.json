@@ -1,0 +1,12 @@
+{
+  "name": "openhud",
+  "version": "1.0.0",
+  "description": "Start of an open source CS2 Custom Hud using node.js with express / websockets, and react with tailwind css.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

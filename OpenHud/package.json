@@ -1,5 +1,6 @@
 {
   "name": "openhud",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,6 +11,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.19.2"
+    "cors": "^2.8.5",
+    "csgogsi": "^3.0.5",
+    "csgogsi-socket": "^2.7.4",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
   }
 }
