@@ -11,6 +11,7 @@ export const Layout = () => {
   useEffect(() => {
     socket.on('update', (data) => {
       setGameData(data);
+      console.log(gameData);
     });
 
     return () => {
@@ -21,7 +22,7 @@ export const Layout = () => {
   return (
     <div>
       {gameData && (
-        <><Player playerData={gameData.player} /><AllPlayers data={gameData.allplayers} /></>
+        <><Player playerData={gameData.player} /><AllPlayers allPlayersData={gameData.allplayers} /></>
       )}
     </div>
   );

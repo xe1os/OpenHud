@@ -7,6 +7,7 @@ import Layout from "./pages/Layout";
 import Players from "./pages/Players";
 import Footer from "./pages/Footer";
 import { Hud } from "./pages/Hud";
+import {CSGO} from "csgogsi-socket";
 function App() {
   return (
     <div className="overflow-hidden">

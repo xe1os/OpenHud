@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
-export const AllPlayers = ({data}) => {
-  // console.log(data);
+export const AllPlayers = ({ allPlayersData }) => {
+
+
   return (
     <div>
-        Hello;
     </div>
-  )
-}
+  );
+};
