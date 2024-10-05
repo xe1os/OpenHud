@@ -16,6 +16,20 @@ app.use(cors());
 
 app.use(express.static('build'));
 
+const fixGSIData = (data) => {
+    if (data.player) {
+        data.player.observer_slot = data.player.observer_slot === 9 ? 0 : data.player.observer_slot + 1;
+    }
+
+    if (data.allplayers) {
+        for (const playerId in data.allplayers) {
+            if (data.allplayers.hasOwnProperty(playerId)) {
+                data.allplayers[playerId].observer_slot = data.allplayers[playerId].observer_slot === 9 ? 0 : data.allplayers[playerId].observer_slot + 1;
+            }
+        }
+    }
+};
+
 io.on('connection', (socket) => {
     console.log('New client connected');
     socket.emit('update', { data: 'Initial data from server' });
@@ -25,8 +39,10 @@ io.on('connection', (socket) => {
 });
 
 app.post('/gsi', express.json(), (req, res) => {
-    const data = req.body;
+    let data = req.body;
+    fixGSIData(data)
     io.emit('update', data);
+    // console.log(data);clear
     res.sendStatus(200);
 });
 

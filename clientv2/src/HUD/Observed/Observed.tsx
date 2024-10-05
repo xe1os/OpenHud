@@ -1,8 +1,27 @@
 import React from 'react'
 import './observed.scss'
 import { Player } from 'csgogsi-socket';
+import { WeaponImage } from '../Weapons/Weapon';
+import { ArmorHelmet, ArmorFull, HealthFull, Bullets, KillIcon, Skull, AssistIcon } from '../../assets/Icons';
+import { RoundKills } from '../Helpers/RoundKills';
+import { Avatar } from '../Helpers/Avatar';
 
-export const Observed = (player: Player | null) => {
+interface PlayerProps {
+    player: Player | null;
+}
+
+export const Observed = ({player}: PlayerProps) => {
+    if (!player) return null;
+
+    // console.log(player);
+    
+    const weapons = Object.values(player.weapons).map(weapon => ({ ...weapon, name: weapon.name.replace("weapon_", "") }));
+    const currentWeapon = weapons.filter(weapon => weapon.state === "active")[0];
+    const grenades = weapons.filter(weapon => weapon.type === "Grenade");
+    const { stats } = player;
+    const teamColor = player.team.side === "CT" ? "bg-CTColor" : "bg-TColor";
+    const roundKills = player.state.round_kills > 0 ? player.state.round_kills : "";
+
     const getHealthBarWidth = (health: number, min: number, max: number) => {
 		if (health > min && health <= max) {
 			return health + "%";
@@ -16,68 +35,94 @@ export const Observed = (player: Player | null) => {
 		return "0%";
 	}
 
-    if (!player) {
-        return <div>Loading...</div>;
-    }
 
-    /* 
-    Object Keys : steamid, name, observer_slot, team, activity, state, spectarget, position, forward
-
-        state: health, armor, helmet, defusekit, flashed, smoked, burning, money, round_kills, round_killhs, round_totaldmg, equip_value
-
-    */
-
-
-  return (
-    <div>
-        {/* <div id='Test' className='absolute top-2 w-20 h-5 bg-slate-700 text-white flex justify-center items-center'>
-            {roundKills}
-        </div> */}
-
-
-        <div id='Observed-Player' className='flex h-[90vh] justify-center items-end'>
-            <div id='Observed-Container' className='flex w-[38%] h-[12%] bg-MainPanel rounded-2xl overflow-hidden'>
-                <div id='Observed-Avatar' className={`flex justify-center items-center w-[20%] text-white`}></div>
-                <div id='Observed-Main' className='flex flex-col w-[80%] ml-1'>
-                    <div id='Observed-Top' className='flex flex-1 text-white font-semibold text-3xl'>
-                        <div id='Observed-Name' className='flex w-[45%]'>Alias</div>
-                        <div id='Observed-RoundKills-Container' className='flex flex-1'>5</div>
+    return (
+        <>
+            <div className="observed-background">
+                <div className={`observed ${player.team.side}`}>
+                    <div className="obs-avatar-container">
+                        {<Avatar steamid={player.steamid} height={140} width={140} slot={player.observer_slot} teamSide={player.team.side}/>}
                     </div>
-                    <div id='Observed-Middle' className='flex flex-1'>
-                        <div id='Observed-Stats-Container' className='flex w-1/2'></div>
-                        <div id='Observed-Nades-Container' className='flex w-1/2'></div>
-                    </div>
-                    <div id='Observed-Bottom' className='flex flex-1'>
-                        <div id='Observed-Health-Container' className='flex w-[75%] justify-start items-center gap-1'>
-                            <div id='Observed-Health-Text-Icon' className='flex w-[20%] h-full justify-center items-center gap-1'>
-                                <div id='Observed-Health-Icon' className='flex w-[50%] h-full fill-white justify-center'>
-                                    <div className='flex w-[60%] h-full justify-center items-center'></div>
-                                </div>
-                                <div id='Observed-Health-Text' className='flex w-[50%] h-full text-white text-xl font-semibold justify-start items-center'>100</div>
+                    <div className="main_row">
+                        <div className="obs-top">
+                            <div className="username_container">
+                                {/* <TeamLogo team={player.team} height={35} width={35} /> */}
+                                <div className="username">{player.name}</div>
+                                {/* <div className="real_name">{player.realName}</div> */}
                             </div>
-
-                            <div id='Observed-Health-Bar' className='flex w-[80%] h-full gap-1 justify-start items-center'>
-                                <div className="obs-healthblock">
-                                    {/* <div className={`obs-hpbar1 ${teamColor}`} style={{ width: getHealthBarWidth(playerData.state.health, 0, 25) }}/> */}
+                            <div className="kills-holder">
+                                <RoundKills player={player}/>
+                            </div>
+                            <div className="utility">
+                                {/* <Bomb player={player} />
+                                <Defuse player={player} /> */}
+                            </div>
+                            <div className="armor-icon icon">
+                                {player.state.helmet ? <ArmorHelmet /> : <ArmorFull />}
+                            </div>
+                        </div>
+                        <div className="obs-middle">
+                            <div className="stats_row">
+                                <div className="statistics">
+                                    <Statistic label={<KillIcon/>} value={stats.kills} />
+                                    <Statistic label={<AssistIcon/>} value={stats.assists} />
+                                    <Statistic label={<Skull/>} value={stats.deaths} />
+                                    <Statistic label={"ADR"} value={player.state.adr} />
                                 </div>
-                                <div className="obs-healthblock">
-                                    {/* <div className={`obs-hpbar2 ${teamColor}`} style={{ width: getHealthBarWidth(playerData.state.health, 25, 50) }}/> */}
+                            </div>
+                            <div className="grenade_container">
+                                {grenades.map(grenade => <React.Fragment key={`${player.steamid}_${grenade.name}_${grenade.ammo_reserve || 1}`}>
+                                    <WeaponImage weapon={grenade.name} active={grenade.state === "active"} isGrenade />
+                                    {
+                                        grenade.ammo_reserve === 2 ? <WeaponImage weapon={grenade.name} active={grenade.state === "active"} isGrenade /> : null}
+                                </React.Fragment>)}
+                            </div>
+                        </div>
+                        <div className="obs-bottom">
+                            <div className="obs-health">
+                                <div className="health_armor_container">
+                                    <div className="health-icon icon"><HealthFull /></div>
+                                    <div className="health text">{player.state.health}</div>
                                 </div>
-                                <div className="obs-healthblock">
-                                    {/* <div className={`obs-hpbar3 ${teamColor}`} style={{ width: getHealthBarWidth(playerData.state.health, 50, 75) }}/> */}
+                                <div className="healthbar-container">
+                                    <div className="obs-healthblock">
+                                        <div className="obs-hpbar1" style={{ width: getHealthBarWidth(player.state.health, 0, 25) }}/>
+                                    </div>
+                                    <div className="obs-healthblock">
+                                        <div className="obs-hpbar2" style={{ width: getHealthBarWidth(player.state.health, 25, 50) }}/>
+                                    </div>
+                                    <div className="obs-healthblock">
+                                        <div className="obs-hpbar3" style={{ width: getHealthBarWidth(player.state.health, 50, 75) }}/>
+                                    </div>
+                                    <div className="obs-healthblock">
+                                        <div className="obs-hpbar4 " style={{ width: getHealthBarWidth(player.state.health, 75, 100) }}/>
+                                    </div>
                                 </div>
-                                <div className="obs-healthblock">
-                                    {/* <div className={`obs-hpbar4 ${teamColor}`} style={{ width: getHealthBarWidth(playerData.state.health, 75, 100) }}/> */}
+                            </div>
+                            <div className="ammo">
+                                <div className="ammo_counter">
+                                    <div className="ammo_clip">{(currentWeapon && currentWeapon.ammo_clip) || "-"}</div>
+                                    <div className="ammo_reserve">/{(currentWeapon && currentWeapon.ammo_reserve) || "-"}</div>
+                                </div>
+                                <div className="ammo_icon_container">
+                                    <Bullets />
                                 </div>
                             </div>
                         </div>
-                        <div id='Observed-Ammo-Container' className='w-[25%]'>
-
-                        </div>
+                        {/* <div className="flag">{countryName ? <img src={`${apiUrl}files/img/flags/${countryName.replace(/ /g, "-")}.png`} alt={countryName} /> : ''}</div> */}
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-  )
+        </>
+    );
 }
+
+
+const Statistic = ({label, value}: {label: string | React.ReactNode, value: string | number}) => {
+    return (
+        <div className="stat">
+            <div className="label">{label}</div>
+            <div className="value">{value}</div>
+        </div>
+    );
+};
