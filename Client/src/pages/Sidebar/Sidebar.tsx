@@ -1,19 +1,59 @@
-import React from 'react'
-import { AccountToggle } from './AccountToggle'
-import { Search } from './Search'
-import { RouteSelect } from './RouteSelect'
-import { Plan } from './Plan'
+import React, { useState } from 'react';
+import { AccountToggle } from './AccountToggle';
+import { Search } from './Search';
+import { RouteSelect } from './RouteSelect';
+import { Plan } from './Plan';
+import { Drawer, List, ListItem, Box,} from '@mui/material';
+import { Button } from '@mui/base';
+import MenuIcon from '@mui/icons-material/Menu';
 
-export const Sidebar = () => {
+export const Sidebar: React.FC = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (event && event.type === 'keydown' && (event as React.KeyboardEvent).key === 'Tab') {
+      return;
+    }
+    setDrawerOpen(open);
+  };
+
+  const drawerContent = (
+    <Box role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
+      <List>
+        <ListItem>
+          <AccountToggle />
+        </ListItem>
+        <ListItem>
+          <Search />
+        </ListItem>
+        <ListItem>
+          <RouteSelect />
+        </ListItem>
+      </List>
+    </Box>
+  );
+
   return (
-    <div>
+    <>
+      <Button className='fixed top-1 left-1 lg:hidden z-10 size-12 bg-button hover:bg-border rounded' onClick={toggleDrawer(true)}><MenuIcon/></Button>
+      {/* Drawer for mobile view */}
+      <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+      >
+        {drawerContent}
+      </Drawer>
+
+      {/* Sidebar for larger screens */}
+      <nav id='sidebar' className='lg:block hidden'>
         <div className='overflow-y-scroll sticky top-4 h-[calc(100vh-32px-48px)]'>
-            {/* TODO: Main sidebar content */}
-            <AccountToggle />
-            <Search />
-            <RouteSelect />
+          <AccountToggle />
+          <Search />
+          <RouteSelect />
         </div>
         <Plan />
-    </div>
-  )
-}
+      </nav>
+    </>
+  );
+};

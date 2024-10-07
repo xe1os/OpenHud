@@ -2,9 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "fonts/montserrat.css";
-@import "fonts/stratum2.css";
+
+html {
+    font-family: 'Roboto', sans-serif;
+}
+.hud {
+    position: fixed;
+    line-height: normal;
+}
 
 
+.light {
 
+}
 
+.dark {
+  --background-primary: 5, 25, 35;
+  --background-secondary: 15, 44, 62;
+  --text-color: 255, 255, 255;
+  --border-color: 5, 130, 202;
+  --button-color: 0, 100, 148;
+  background: rgba(var(--background-primary));
+}

@@ -1,12 +1,10 @@
-import React from 'react'
-import { StatCards } from './StatCards'
-import { Routes, Route, Outlet } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { Players } from '../Players'
-import { Home } from '../Home'
 import { Matches } from '../Matches'
 import { HUD } from '../../HUD/HUD'
-import { Dashboard } from './Dashboard'
 import { Teams } from '../Teams'
+import { Dashboard } from './Dashboard'
+import { PlayersPage } from '../Players/PlayersPage'
 
 interface GridProps {
     gameData?: any;
@@ -14,12 +12,13 @@ interface GridProps {
 
 export const Grid = ({gameData}: GridProps) => {
   return (
-    <div className='px-4 relative size-full'>
+    <div id='Page' className='px-4 flex justify-center size-full items-center'>
         <Routes>
-          <Route path="/players" element={<Players />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/players" element={<PlayersPage />} />
           <Route path="/matches" element={<Matches />} />
-          <Route path="/hud" element={<HUD />} />
           <Route path="/teams" element={<Teams/>}/>
+          <Route path="/hud" element={<HUD />} />
         </Routes>
     </div>
   )
