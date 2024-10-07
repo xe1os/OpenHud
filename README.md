@@ -1,5 +1,5 @@
-Start of an open source CS2 Custom Hud using node.js with express / websockets, and react with tailwind css.
-
+# Open Hud - Open source CS2 Hud and Admin Panel
+Start of an open source CS2 Custom Hud using node.js with express / websockets, and react with tailwind css, and Material UI.
 To start:
 
   Start the GSI server by running node server.js in the integrated terminal for the GSIServer folder. This gets the server up and running listening for data from CS2.
@@ -7,4 +7,10 @@ To start:
 
 EXTREMELY EARLY AND EXPERIMENTAL
 
-  
+# Custom CS2 Hud
+![Custom CS2 Hud](https://i.imgur.com/157zIwc.jpeg)
+(screenshot from complete version of hud in different software. major parts of the hud still need to be implemented.)
+
+
+# Admin Panel
+![Custom CS2 Hud](https://i.imgur.com/YRswL30.png)
