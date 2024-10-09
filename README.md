@@ -6,6 +6,13 @@ To start:
   Run npm start in the integrated terminal for the Client folder.
 
 EXTREMELY EARLY AND EXPERIMENTAL
+# To Do:
+- Teams API
+- Matches API
+- Dashboard API
+- Fully integrate all APIs with HUD
+
+Hopefully it ends up looking very nice and lets a lot of people use it in their streams!
 
 # Custom CS2 Hud
 ![Custom CS2 Hud](https://i.imgur.com/157zIwc.jpeg)
