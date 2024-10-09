@@ -1,6 +1,6 @@
 import React from 'react';
 import { Player } from 'csgogsi-socket';
-import { KillIcon } from '../../assets/Icons';
+import { KillIcon } from '../assets/Icons';
 
 
 interface RoundKillsProps {

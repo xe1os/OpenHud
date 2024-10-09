@@ -1,7 +1,8 @@
 import React from 'react'
 import { Sidebar } from '../Sidebar'
-import { Content } from '../Content'
+import { MainPanel } from '../MainPanel';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import { Outlet } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -26,13 +27,13 @@ const theme = createTheme({
       },
   });
 
-export const Home = () => {
+export const AdminPanel = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline/>
       <div className='lg:grid gap-4 p-4 grid-cols-[220px,_1fr]'>
         <Sidebar/>
-        <Content/>
+        <MainPanel/>
     </div>
     </ThemeProvider>
   )

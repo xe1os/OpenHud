@@ -1,5 +1,5 @@
-import Image from "../../assets/images/player_silhouette.webp";
-import { PlayerProps } from "./Players";
+import { PlayerSilhouette } from "./PlayersPage";
+import { PlayerProps } from './PlayersPage';
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,7 +9,6 @@ import Typography from "@mui/material/Typography";
 import EditIcon from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-import { Alert } from "@mui/material";
 import { useState } from "react";
 
 interface PlayerCardProps {
@@ -69,7 +68,7 @@ export const PlayerCard = ({ player, deletePlayer, onEdit }: PlayerCardProps) =>
         <CardMedia
           component="img"
           sx={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: "6px" }}
-          image={player.avatar ? player.avatar : Image}
+          image={player.avatar ? player.avatar : PlayerSilhouette}
           alt={player.avatar ? player.alias : "Player"}
         />
       </Box>

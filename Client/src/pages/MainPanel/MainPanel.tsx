@@ -1,8 +1,8 @@
 import React from 'react'
-import { Topbar } from '../Dashboard/Topbar'
-import { Grid } from '../Dashboard/Grid'
+import { Topbar } from './Topbar'
+import { Grid } from './PageContainer'
 
-export const Content = () => {
+export const MainPanel = () => {
     return (
 
         <main id='Content' className='bg-background2 relative text-textcolor rounded-lg pb-4 shadow h-full flex flex-col'>

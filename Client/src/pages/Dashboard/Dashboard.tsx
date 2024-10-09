@@ -1,111 +1,118 @@
-
 import React from 'react';
-import {
-  Container,
-  Typography,
-  Grid,
-  Grid2,
-  Paper,
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Avatar,
-} from '@mui/material';
+import { Grid, Paper, Typography, Box } from '@mui/material';
 
+// Dummy data (replace with real data)
+const serverInfo = {
+  ip: '192.168.0.1',
+  port: 27015,
+  status: 'Connected'
+};
 
-export const Dashboard: React.FC = () => {
+const matchInfo = {
+  round: 5,
+  roundTime: '1:20',
+  roundState: 'Live',
+  bestOfType: 'Best of 3'
+};
+
+const team1 = {
+  name: 'Team Alpha',
+  score: 7,
+  economy: 12000,
+  players: [
+    { name: 'Player1', kills: 10, deaths: 3, adr: 95 },
+    { name: 'Player2', kills: 8, deaths: 5, adr: 80 },
+    // Add more players
+  ]
+};
+
+const team2 = {
+  name: 'Team Bravo',
+  score: 5,
+  economy: 8000,
+  players: [
+    { name: 'PlayerA', kills: 6, deaths: 7, adr: 75 },
+    { name: 'PlayerB', kills: 9, deaths: 6, adr: 85 },
+    // Add more players
+  ]
+};
+
+export const Dashboard = () => {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
+    <Box sx={{ padding: 4 }}>
       <Grid container spacing={3}>
-        {/* Upcoming Matches */}
-        <Grid xs={12} md={6} lg={4}>
-          <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
-            <Typography variant="h6">Upcoming Matches</Typography>
-            <List>
-              <ListItem>
-                <ListItemText primary="Match 1: Team A vs Team B" secondary="Tomorrow 3:00 PM" />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Match 2: Team C vs Team D" secondary="Oct 10, 5:00 PM" />
-              </ListItem>
-            </List>
+        {/* Server Connect Info */}
+        <Grid item xs={12} md={4}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Server Connect Info
+            </Typography>
+            <Typography>IP: {serverInfo.ip}</Typography>
+            <Typography>Port: {serverInfo.port}</Typography>
+            <Typography>Status: {serverInfo.status}</Typography>
           </Paper>
         </Grid>
 
-        {/* Server Connection Status */}
-        <Grid xs={12} md={6} lg={4}>
-          <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
-            <Typography variant="h6">Server Connection Status</Typography>
-            <Box mt={2}>
-              <Typography variant="body1" color="green">Connected</Typography>
-              {/* For disconnected status, use: <Typography color="red">Disconnected</Typography> */}
-            </Box>
+        {/* Current Players */}
+        <Grid item xs={12} md={4}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Current Players
+            </Typography>
+            {/* Replace with actual player data */}
+            <Typography>Player 1, Player 2, Player 3...</Typography>
           </Paper>
         </Grid>
 
-        {/* Connected Players */}
-        <Grid xs={12} md={6} lg={4}>
-          <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
-            <Typography variant="h6">Connected Players</Typography>
-            <List>
-              <ListItem>
-                <Avatar alt="Player 1" />
-                <ListItemText primary="Player 1" />
-              </ListItem>
-              <ListItem>
-                <Avatar alt="Player 2" />
-                <ListItemText primary="Player 2" />
-              </ListItem>
-            </List>
+        {/* Match Information */}
+        <Grid item xs={12} md={4}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Match Information
+            </Typography>
+            <Typography>Round: {matchInfo.round}</Typography>
+            <Typography>Round Time: {matchInfo.roundTime}</Typography>
+            <Typography>Round State: {matchInfo.roundState}</Typography>
+            <Typography>Best of Type: {matchInfo.bestOfType}</Typography>
           </Paper>
         </Grid>
 
-        {/* Current Match Information */}
-        <Grid xs={12} md={6}>
-          <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
-            <Typography variant="h6">Current Match Information</Typography>
-            <Typography variant="body1" mt={2}>In-Game Time: 12:34</Typography>
-            <Typography variant="body1" mt={1}>Current Round: 5/30</Typography>
+        {/* Team 1 Panel */}
+        <Grid item xs={12} md={6}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              {team1.name} - Score: {team1.score}
+            </Typography>
+            <Typography>Team Economy: ${team1.economy}</Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              Player Stats:
+            </Typography>
+            {team1.players.map((player, index) => (
+              <Typography key={index}>
+                {player.name}: {player.kills}K / {player.deaths}D, ADR: {player.adr}
+              </Typography>
+            ))}
           </Paper>
         </Grid>
 
-        {/* Team A Box */}
-        <Grid xs={12} md={6}>
-          <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
-            <Typography variant="h6">Team A</Typography>
-            <Typography variant="body1" mt={2}>Score: 8</Typography>
-            <Typography variant="body1">Economy: $10,000</Typography>
-            <Typography variant="h6" mt={2}>Player Stats</Typography>
-            <List>
-              <ListItem>
-                <ListItemText primary="Player 1" secondary="Kills: 10, Deaths: 2, Assists: 3" />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Player 2" secondary="Kills: 8, Deaths: 4, Assists: 2" />
-              </ListItem>
-            </List>
-          </Paper>
-        </Grid>
-
-        {/* Team B Box */}
-        <Grid xs={12} md={6}>
-          <Paper elevation={3} sx={{ padding: 2, height: '100%' }}>
-            <Typography variant="h6">Team B</Typography>
-            <Typography variant="body1" mt={2}>Score: 7</Typography>
-            <Typography variant="body1">Economy: $9,500</Typography>
-            <Typography variant="h6" mt={2}>Player Stats</Typography>
-            <List>
-              <ListItem>
-                <ListItemText primary="Player 3" secondary="Kills: 9, Deaths: 3, Assists: 1" />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Player 4" secondary="Kills: 7, Deaths: 5, Assists: 2" />
-              </ListItem>
-            </List>
+        {/* Team 2 Panel */}
+        <Grid item xs={12} md={6}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              {team2.name} - Score: {team2.score}
+            </Typography>
+            <Typography>Team Economy: ${team2.economy}</Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              Player Stats:
+            </Typography>
+            {team2.players.map((player, index) => (
+              <Typography key={index}>
+                {player.name}: {player.kills}K / {player.deaths}D, ADR: {player.adr}
+              </Typography>
+            ))}
           </Paper>
         </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
 };

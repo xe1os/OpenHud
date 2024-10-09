@@ -1,5 +1,5 @@
 import React from 'react'
-import { AllPlayers } from './AllPlayers'
+import { AllPlayers } from '../Players/Player'
 import * as I from 'csgogsi-socket'
 
 interface TeamBoxProps {

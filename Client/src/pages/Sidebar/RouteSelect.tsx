@@ -43,7 +43,7 @@ const NavRoutes = ({Icon, title, target}: RouteProps) => {
 
     return (
         <NavLink 
-        to={`/${title.toLowerCase()}`}
+        to={`${title.toLowerCase()}`}
         target={target}
         className={({ isActive }) => 
         `flex items-center justify-center lg:justify-start gap-2 w-full rounded px-2 py-1.5 text-sm transition-[box-shadow,_background-color,_color] 

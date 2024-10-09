@@ -1,8 +1,8 @@
 import React from 'react'
 import { CSGO, Team } from 'csgogsi-socket';
-import { Observed } from '../Observed/Observed'
+import { Observed } from '../Players/Observed'
 import { Matchbar } from '../Matchbar/Matchbar';
-import { TeamBox } from '../AllPlayers/TeamBox';
+import { TeamBox } from '../Players/TeamBox';
 
 interface LayoutProps {
   game: CSGO;

@@ -1,4 +1,4 @@
-import * as Weapons from '../../assets/Weapons'
+import * as Weapons from '../assets/Weapons';
 
 interface WeaponProps extends React.SVGProps<SVGSVGElement> {
   weapon: string;

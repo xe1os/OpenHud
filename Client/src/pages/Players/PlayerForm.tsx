@@ -1,6 +1,6 @@
 import { Typography, TextField, Button, Paper, Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { PlayerProps } from './Players';
+import { PlayerProps } from './PlayersPage';
 
 interface PlayerFormProps {
   player?: PlayerProps;

@@ -4,6 +4,7 @@ import {Typography, Container, Box } from '@mui/material';
 import { PlayerCard } from './PlayerCard';
 import Grid from '@mui/material/Grid2';
 import { PlayerForm } from './PlayerForm';
+import PlayerSilhouette from '../../assets/player_silhouette.webp'
 
 
 export interface PlayerProps {
@@ -103,3 +104,5 @@ export const PlayersPage = () => {
     </Box>
   );
 };
+
+export { PlayerSilhouette };

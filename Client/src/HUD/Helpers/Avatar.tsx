@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Skull, playerCT, playerT } from '../../assets/Icons';
+import { Skull, playerCT, playerT } from '../assets/Icons';
 import axios from 'axios';
 
 interface AvatarProps {

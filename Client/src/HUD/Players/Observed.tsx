@@ -2,9 +2,9 @@ import React from 'react'
 import './observed.scss'
 import { Player } from 'csgogsi-socket';
 import { WeaponImage } from '../Weapons/Weapon';
-import { ArmorHelmet, ArmorFull, HealthFull, Bullets, KillIcon, Skull, AssistIcon } from '../../assets/Icons';
-import { RoundKills } from '../Helpers/RoundKills';
-import { Avatar } from '../Helpers/Avatar';
+import { ArmorHelmet, ArmorFull, HealthFull, Bullets, KillIcon, Skull, AssistIcon } from '../assets/Icons';
+import { RoundKills } from '../Helpers';
+import { Avatar } from '../Helpers'
 
 interface PlayerProps {
     player: Player | null;
@@ -12,15 +12,11 @@ interface PlayerProps {
 
 export const Observed = ({player}: PlayerProps) => {
     if (!player) return null;
-
     // console.log(player);
-    
     const weapons = Object.values(player.weapons).map(weapon => ({ ...weapon, name: weapon.name.replace("weapon_", "") }));
     const currentWeapon = weapons.filter(weapon => weapon.state === "active")[0];
     const grenades = weapons.filter(weapon => weapon.type === "Grenade");
     const { stats } = player;
-    const teamColor = player.team.side === "CT" ? "bg-CTColor" : "bg-TColor";
-    const roundKills = player.state.round_kills > 0 ? player.state.round_kills : "";
 
     const getHealthBarWidth = (health: number, min: number, max: number) => {
 		if (health > min && health <= max) {

@@ -1,9 +1,9 @@
 import React from 'react'
 import * as I from 'csgogsi-socket'
-import './allplayers.scss'
+import './players.scss'
 import { RoundKills } from '../Helpers/RoundKills';
 import { Avatar } from '../Helpers/Avatar';
-import { KillIcon, Skull } from '../../assets/Icons';
+import { KillIcon, Skull } from '../assets/Icons';
 import { WeaponImage } from '../Weapons/Weapon';
 
 interface IProps {
