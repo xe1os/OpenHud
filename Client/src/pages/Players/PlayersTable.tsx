@@ -28,12 +28,12 @@ export const PlayersTable = ({players}:PlayersTableProps) => {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                    <Avatar src={player.picture ? player.picture : Image} alt='Player' className='size-12'/>
+                    <Avatar src={player.avatar ? player.avatar : Image} alt='Player' className='size-12'/>
                     </TableCell>
-                    <TableCell align="right">{player.name}</TableCell>
-                    <TableCell align="right">{player.realName}</TableCell>
-                    <TableCell align="right">{player.teamLogo && <Avatar src={player.teamLogo} alt='Team Logo' className='size-8'/>}</TableCell>
-                    <TableCell align="right">{player.steamId}</TableCell>
+                    <TableCell align="right">{player.alias}</TableCell>
+                    <TableCell align="right">{player.real_name}</TableCell>
+                    <TableCell align="right">{player.team && <Avatar src={player.team} alt='Team Logo' className='size-8'/>}</TableCell>
+                    <TableCell align="right">{player.steam_id}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

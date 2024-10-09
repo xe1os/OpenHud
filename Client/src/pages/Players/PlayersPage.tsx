@@ -1,208 +1,105 @@
-import React, { useState } from 'react';
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Avatar,
-  Grid2,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  IconButton,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-  Paper,
-} from '@mui/material';
-import { Edit, Delete } from '@mui/icons-material';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import {Typography, Container, Box } from '@mui/material';
+import { PlayerCard } from './PlayerCard';
+import Grid from '@mui/material/Grid2';
+import { PlayerForm } from './PlayerForm';
 
-interface Team {
-  id: number;
-  name: string;
-  shortName: string;
-}
 
-interface Player {
-  id: number;
+export interface PlayerProps {
+  id: string;
   alias: string;
-  realName: string;
-  steamId: string;
-  picture: string;
-  teamId: number;
+  avatar?: string;
+  real_name?: string;
+  steam_id: string;
+  team?: string;
 }
 
-interface PlayersPageProps {
-  teams?: Team[];
+export const getPlayers = async () => { //Async Function Expression
+  const players = await axios.get('http://localhost:4000/players')
+  return players.data
 }
 
-export const PlayersPage: React.FC<PlayersPageProps> = ({ teams }) => {
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [alias, setAlias] = useState('');
-  const [realName, setRealName] = useState('');
-  const [steamId, setSteamId] = useState('');
-  const [picture, setPicture] = useState('');
-  const [selectedTeamId, setSelectedTeamId] = useState<number | ''>('');
+export const getTeamName = async (teamId? :string) => {
+  // Function to get team name by teamId
+  return 'Team Name'; // Replace with actual logic
+};
+
+export const PlayersPage = () => {
+  const [players, setPlayers] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [editingPlayerId, setEditingPlayerId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerProps | null>(null); // Store selected player for editing
 
-  const handleCreateOrUpdatePlayer = () => {
-    if (!alias || !steamId ) {
-      alert('Alias, Steam ID are required.');
-      return;
-    }
+  useEffect(() => {
+    // Fetch players data when the component mounts
+    getPlayers().then((data) => {
+      setPlayers(data);
+    });
+  }, []);
 
-    if (isEditing && editingPlayerId !== null) {
-      setPlayers(
-        players.map((player) =>
-          player.id === editingPlayerId
-            ? { ...player, alias, realName, steamId, picture, teamId: Number(selectedTeamId) }
-            : player
-        )
-      );
-    } else {
-      const newPlayer: Player = {
-        id: Date.now(), // Temporary unique ID
-        alias,
-        realName,
-        steamId,
-        picture,
-        teamId: Number(selectedTeamId),
-      };
-      setPlayers([...players, newPlayer]);
-    }
 
-    // Reset form
-    setAlias('');
-    setRealName('');
-    setSteamId('');
-    setPicture('');
-    setSelectedTeamId('');
-    setIsEditing(false);
-    setEditingPlayerId(null);
+  const handleCreatePlayer = async (player: PlayerProps) => {
+    // Handle create or update player logic
+    setIsLoading(true);
+    await axios.post('http://localhost:4000/players', player)
+    await getPlayers().then((data) => {
+      setPlayers(data);
+    });
+    setIsLoading(false);
   };
 
-  const handleEditPlayer = (player: Player) => {
-    setAlias(player.alias);
-    setRealName(player.realName);
-    setSteamId(player.steamId);
-    setPicture(player.picture);
-    setSelectedTeamId(player.teamId);
+  const handleEditPlayer = (player: PlayerProps) => {
+    // Handle edit player logic
     setIsEditing(true);
-    setEditingPlayerId(player.id);
+    setSelectedPlayer(player); // Set selected player for editing
   };
 
-  const handleDeletePlayer = (playerId: number) => {
-    setPlayers(players.filter((player) => player.id !== playerId));
-  };
+  const handleUpdatePlayer = async (player: PlayerProps) => {
+    // Handle update player logic
+    setIsLoading(true);
+    await axios.put(`http://localhost:4000/players/${player.id}`, player)
+    await getPlayers().then((data) => {
+      setPlayers(data);
+    });
+    setIsLoading(false);
+  }
 
-  const getTeamName = (teamId: number) => {
-    if (!teams) return 'Unknown';
-    const team = teams.find((team) => team.id === teamId);
-    return team;
+  const handleDeletePlayer = async (id: string) => {
+    // Handle delete player logic
+    setIsLoading(true);
+    await axios.delete(`http://localhost:4000/players/${id}`)
+    setPlayers(players.filter((player: PlayerProps) => player.id !== id));
+    setIsLoading(false);
   };
 
   return (
-    <Container maxWidth="md">
-    <Paper sx={{p: 4}}>
-      <Typography variant="h4" gutterBottom>
-        Players Management
-      </Typography>
+    <Box sx={{ display: 'flex', flexDirection: { xs: "column", lg: "row" }, width: '100%', height: '100%', gap: 4 }}>
+      <Container>
+        <Typography variant="h4" gutterBottom>
+              Player Form
+        </Typography>
+        {isEditing && selectedPlayer ? ( // Conditionally render PlayerForm for editing
+          <PlayerForm player={selectedPlayer} updatePlayer={handleUpdatePlayer} isEditing={isEditing} onCancel={() => setIsEditing(false)}/>
+        )
+        : 
+        (<PlayerForm createPlayer={handleCreatePlayer} />
 
-      <Grid2 container spacing={3}>
-        {/* Player Form */}
-        <Grid2>
-          <Typography variant="h6">{isEditing ? 'Edit Player' : 'Create a New Player'}</Typography>
-          <TextField
-            label="Alias"
-            value={alias}
-            onChange={(e) => setAlias(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Real Name"
-            value={realName}
-            onChange={(e) => setRealName(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Steam ID"
-            value={steamId}
-            onChange={(e) => setSteamId(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Picture URL"
-            value={picture}
-            onChange={(e) => setPicture(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-
-          <FormControl fullWidth margin="normal">
-            <InputLabel id="select-team-label">Team</InputLabel>
-            <Select
-              labelId="select-team-label"
-              value={selectedTeamId}
-              onChange={(e) => setSelectedTeamId(e.target.value as number)}
-              label="Team"
-            >
-              {teams && teams.map((team) => (
-                <MenuItem key={team.id} value={team.id}>
-                  {team.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCreateOrUpdatePlayer}
-            sx={{ mt: 2 }}
-          >
-            {isEditing ? 'Update Player' : 'Create Player'}
-          </Button>
-        </Grid2>
-
-        {/* Players List */}
-        <Grid2>
-          <Typography variant="h6" gutterBottom>
-            Players List
-          </Typography>
-          {players.length === 0 ? (
-            <Typography>No players created yet.</Typography>
-          ) : (
-            <List>
-              {players.map((player) => (
-                <ListItem key={player.id}>
-                  <ListItemAvatar>
-                    <Avatar alt={player.alias} src={player.picture} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={player.alias}
-                    secondary={`Real Name: ${player.realName}, Steam ID: ${player.steamId}, Team: ${getTeamName(
-                      player.teamId
-                    )}`}
-                  />
-                  <IconButton color='primary' onClick={() => handleEditPlayer(player)} edge="end" aria-label="edit">
-                    <Edit />
-                  </IconButton>
-                  <IconButton color='primary' onClick={() => handleDeletePlayer(player.id)} edge="end" aria-label="delete">
-                    <Delete />
-                  </IconButton>
-                </ListItem>
-              ))}
-            </List>
-          )}
-        </Grid2>
-      </Grid2>
-    </Paper>
-    </Container>
+        )}
+      </Container>
+      <Container sx={{ display: 'flex', flexDirection: 'column', overflowX: 'hidden', width: '100%', height: '100%' }}>
+        <Typography variant="h4" gutterBottom>
+          Players List
+        </Typography>
+        <Grid container spacing={{ xs: 2 }} columns={{ xs: 1, md: 2 }}>
+          {players.length === 0 && <Typography variant="h6">No players created</Typography>}
+          {players.map((player: PlayerProps, index) => (
+            <Grid key={index} size={{ md: 1, lg: 1 }} sx={{ alignItems: "center" }}>
+              <PlayerCard player={player} deletePlayer={handleDeletePlayer} onEdit={handleEditPlayer} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 };
