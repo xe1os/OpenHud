@@ -14,8 +14,8 @@ EXTREMELY EARLY AND EXPERIMENTAL.
 
 To start:
 
-  Start the GSI server by running node server.js in the integrated terminal for the GSIServer folder. This gets the server up and running listening for data from CS2.
-  Run npm start in the integrated terminal for the Client folder.
+  Start the GSI server by running `node index.js` in the integrated terminal for the Server folder. This gets the server up and running listening for data from CS2.
+  Run `npm start` in the integrated terminal for the Client folder.
 
 Hopefully it ends up looking very nice and lets a lot of people use it in their streams!
 
