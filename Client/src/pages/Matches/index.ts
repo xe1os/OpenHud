@@ -1,1 +1,1 @@
-export * from './Matches';
+export * from './MatchesPage';

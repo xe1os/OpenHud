@@ -23,12 +23,12 @@ const routes: RouteProps[] = [
 export const RouteSelect = () => {
   return (
     <div className='w-full'>
-        <div className='border-b mb-4 pb-4 border-border space-y-1'>
+        <div className='border-b pb-4 border-border space-y-1'>
         {routes.map((route, index) => (
             <NavRoutes key={index} {...route} />
         ))}
         </div>
-        <div className='w-full flex justify-center items-center'>
+        <div className='w-full mt-4 flex justify-center items-center'>
             <NavLink to={`/hud`} target='_blank' className={`flex items-center justify-center gap-2 w-1/2 rounded px-2 py-1.5 text-sm transition-[box-shadow,_background-color,_color] hover:bg-border bg-[#006494] text-textcolor shadow`}>
                 <PlayArrowIcon />
                 Hud

@@ -12,5 +12,23 @@ export let db = new sqlite3.Database(database, (err) => {
         }
         console.log('Players Table Ready.');
     });
+    db.run(`CREATE TABLE IF NOT EXISTS teams(id INTEGER PRIMARY KEY,name,shortName,logo,country,last_updated)`, (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('Teams Table Ready.');
+    });
+    db.run(`CREATE TABLE IF NOT EXISTS matches(id INTEGER PRIMARY KEY, current, left, right, matchType, vetos)`, (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('Matches Table Ready.');
+    });
+    // db.run(`DROP TABLE IF EXISTS teams`, (err) => {
+    //     if (err) {
+    //         console.error(err.message);
+    //     }
+    //     console.log('Teams Table Dropped.');
+    // });
 });
 

@@ -18,13 +18,15 @@ export interface PlayerProps {
 
 export const getPlayers = async () => { //Async Function Expression
   const players = await axios.get('http://localhost:4000/players')
+  if (axios.isAxiosError(players)) {
+    console.log('Error fetching players data')
+    return []
+  }
+  if (!players) {
+    return []
+  }
   return players.data
 }
-
-export const getTeamName = async (teamId? :string) => {
-  // Function to get team name by teamId
-  return 'Team Name'; // Replace with actual logic
-};
 
 export const PlayersPage = () => {
   const [players, setPlayers] = useState([]);
@@ -85,17 +87,16 @@ export const PlayersPage = () => {
         )
         : 
         (<PlayerForm createPlayer={handleCreatePlayer} />
-
         )}
       </Container>
       <Container sx={{ display: 'flex', flexDirection: 'column', overflowX: 'hidden', width: '100%', height: '100%' }}>
         <Typography variant="h4" gutterBottom>
           Players List
         </Typography>
-        <Grid container spacing={{ xs: 2 }} columns={{ xs: 1, md: 2 }}>
+        <Grid container spacing={2} columns={2}>
           {players.length === 0 && <Typography variant="h6">No players created</Typography>}
           {players.map((player: PlayerProps, index) => (
-            <Grid key={index} size={{ md: 1, lg: 1 }} sx={{ alignItems: "center" }}>
+            <Grid key={index} size={1}>
               <PlayerCard player={player} deletePlayer={handleDeletePlayer} onEdit={handleEditPlayer} />
             </Grid>
           ))}

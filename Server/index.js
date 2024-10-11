@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
-import * as Players from './crud.js';
+import * as API from './crud.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -57,7 +57,7 @@ app.post('/gsi', express.json(), (req, res) => {
 
 app.get('/players', (req, res) => {
     // GET a player
-    Players.readPlayers((err, rows) => {
+    API.readPlayers((err, rows) => {
         if (err) {
             res.status(500).send(err.message);
         }
@@ -71,7 +71,7 @@ app.get('/players', (req, res) => {
 app.post('/players', (req, res) => {
     // POST a player
     const { alias, steam_id, team, real_name, country, avatar } = req.body;
-    Players.createPlayer(alias, steam_id, team, real_name, country, avatar, Date.now(), (err, data) => {
+    API.createPlayer(alias, steam_id, team, real_name, country, avatar, Date.now(), (err, data) => {
         if (err) {
             res.status(500).send(err.message);
         }
@@ -86,7 +86,7 @@ app.post('/players', (req, res) => {
 app.put('/players/:id', (req, res) => {
     // UPDATE a player
     const { alias, steam_id, team, real_name, country, avatar } = req.body;
-    Players.updatePlayer(req.params.id, alias, steam_id, team, real_name, country, avatar, Date.now(), (err) => {
+    API.updatePlayer(req.params.id, alias, steam_id, team, real_name, country, avatar, Date.now(), (err) => {
         if (err) {
             res.status(500).send(err.message);
         }
@@ -99,7 +99,7 @@ app.put('/players/:id', (req, res) => {
 
 app.delete('/players/:id', (req, res) => {
     // DELETE a player
-    Players.deletePlayer(req.params.id, (err) => {
+    API.deletePlayer(req.params.id, (err) => {
         if (err) {
             res.status(500).send(err.message);
         }
@@ -112,7 +112,7 @@ app.delete('/players/:id', (req, res) => {
 
 app.get('/players/:steam_id', (req, res) => {
     // GET a player by steam_id
-    Players.getPlayerBySteamId(req.params.steam_id, (err, row) => {
+    API.getPlayerBySteamId(req.params.steam_id, (err, row) => {
         if (err) {
             res.status(500).send(err.message);
         }
@@ -127,6 +127,148 @@ app.get('/players/:steam_id', (req, res) => {
     });
 });
 
+app.get('/teams', (req, res) => {
+    // GET a team
+    API.readTeams((err, rows) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.status(200).send(rows);
+            console.log("Teams sent");
+        }
+    });
+});
+
+app.post('/teams', (req, res) => {
+    // POST a player
+    const { name, shortName, logo, country } = req.body;
+    API.createTeam(name, shortName, logo, country, Date.now(), (err, data) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.status(201).send(`Team added, ID: ${data.id}`);
+            console.log(`Team added, ID: ${data.id}`);
+        }
+    });
+
+});
+
+app.put('/teams/:id', (req, res) => {
+    // UPDATE a team
+    const { name, shortName, logo, country } = req.body;
+    API.updateTeam(req.params.id, name, shortName, logo, country, Date.now(), (err) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.status(201).send(`Updated Team with ID: ${req.params.id}`);
+            console.log(`Updated Team with ID: ${req.params.id}`);
+        }
+    });
+});
+
+app.delete('/teams/:id', (req, res) => {
+    // DELETE a team
+    API.deleteTeam(req.params.id, (err) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.status(201).send(`Deleted Team with ID: ${req.params.id}`);
+            console.log(`Deleted Team with ID: ${req.params.id}`);
+        }
+    });
+});
+
+app.get('/teams/:name', (req, res) => {
+    // GET a team by name
+    API.getTeamByName(req.params.name, (err, row) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else if (!row) {
+            res.send(null);
+            // console.log(`Team with name: ${req.params.name} not found`);
+        }
+        else {
+            res.status(200).send(row);
+            // console.log(`Team with name: ${req.params.name} sent`);
+        }
+    });
+});
+
+app.get('/matches', (req, res) => {
+    // GET a match
+    API.readMatches((err, rows) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.status(200).send(rows);
+            console.log("Matches sent");
+        }
+    });
+});
+
+app.post('/matches', (req, res) => {
+    // POST a match
+    const { current, left, right, matchType, vetos } = req.body;
+    API.createMatch(current, left, right, matchType, vetos, (err, data) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.status(201).send(`Match added, ID: ${data.id}`);
+            console.log(`Match added, ID: ${data.id}`);
+        }
+    });
+});
+
+app.put('/matches/:id', (req, res) => {
+    // UPDATE a match
+    const { current, left, right, matchType, vetos } = req.body;
+    API.updateMatch(req.params.id, current, left, right, matchType, vetos, (err) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.status(201).send(`Updated Match with ID: ${req.params.id}`);
+            console.log(`Updated Match with ID: ${req.params.id}`);
+        }
+    });
+});
+
+app.delete('/matches/:id', (req, res) => {
+    // DELETE a match
+    API.deleteMatch(req.params.id, (err) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.status(201).send(`Deleted Match with ID: ${req.params.id}`);
+            console.log(`Deleted Match with ID: ${req.params.id}`);
+        }
+    });
+});
+
+app.get('/matches/:id', (req, res) => {
+    // GET a match by id
+    API.getMatchById(req.params.id, (err, row) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else if (!row) {
+            res.send(null);
+            // console.log(`Match with ID: ${req.params.id} not found`);
+        }
+        else {
+            res.status(200).send(row);
+            // console.log(`Match with ID: ${req.params.id} sent`);
+        }
+    });
+});
 
 
 // Export the app and io instances for testing

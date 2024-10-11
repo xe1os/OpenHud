@@ -1,5 +1,4 @@
-import { PlayerSilhouette } from "./PlayersPage";
-import { PlayerProps } from './PlayersPage';
+import { Match } from "../../api/interfaces";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -11,17 +10,17 @@ import Delete from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 
-interface PlayerCardProps {
-  player: PlayerProps;
-  deletePlayer: (id: string) => void;
-  onEdit?: (player: PlayerProps) => void; // Added onEdit prop
+interface MatchCardProps {
+  match: Match;
+  deleteMatch: (id: string) => void;
+  onEdit?: (match: Match) => void; // Added onEdit prop
 }
 
-export const PlayerCard = ({ player, deletePlayer, onEdit }: PlayerCardProps) => {
+export const MatchCard = ({ match, deleteMatch, onEdit }: MatchCardProps) => {
   const [isCopied, setIsCopied] = useState(false); // Flag to track copy state
 
-  const handleCopyClick = (steamId: string) => {
-    navigator.clipboard.writeText(steamId);
+  const handleCopyClick = (id: string) => {
+    navigator.clipboard.writeText(id);
     setIsCopied(true); // Set copied flag to true
     setTimeout(() => {
       setIsCopied(false); // Reset copied flag after timeout
@@ -30,7 +29,7 @@ export const PlayerCard = ({ player, deletePlayer, onEdit }: PlayerCardProps) =>
 
   const handleEditClick = () => {
     if (onEdit) {
-      onEdit(player); // Call onEdit prop function if provided
+      onEdit(match); // Call onEdit prop function if provided
     }
   };
 
@@ -39,19 +38,20 @@ export const PlayerCard = ({ player, deletePlayer, onEdit }: PlayerCardProps) =>
       <Box sx={{ display: "flex", flexDirection: "column", width: { xs: "100%", xl: "50%" } }}>
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">
-            {player.alias}
+            {match.matchType}
           </Typography>
           <Typography variant="subtitle2" component="div" sx={{ color: "text.secondary" }}>
-            {player.real_name}
+            {match.current}
           </Typography>
-          {player.team && <Typography variant="subtitle1" component="div">{player.team}</Typography>}
+          {match.left && <Typography variant="subtitle1" component="div">{match.left.id}</Typography>}
+          {match.right && <Typography variant="subtitle1" component="div">{match.right.id}</Typography>}
           <Button
             variant="contained" // Change variant based on copied flag
             color={isCopied ? "success" : "primary"} // Change color based on copied flag
             sx={{ width: "100%", fontSize: "12px" }}
-            onClick={() => handleCopyClick(player.steam_id)}
+            onClick={() => handleCopyClick(match.id)}
           >
-            {!isCopied && player.steam_id}
+            {!isCopied && match.id}
             {isCopied && "Copied!"}
           </Button>
         </CardContent>
@@ -68,15 +68,15 @@ export const PlayerCard = ({ player, deletePlayer, onEdit }: PlayerCardProps) =>
         <CardMedia
           component="img"
           sx={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: "6px" }}
-          image={player.avatar ? player.avatar : PlayerSilhouette}
-          alt={player.avatar ? player.alias : "Player"}
+          image={match.current ? "Current" : ""}
+          alt={match.current ? "Current" : ""}
         />
       </Box>
       <Box sx={{ position: "absolute", display: "flex", flexDirection: "column", alignItems: 'end', top: 0, right: 0, width: "50%", fontSize: "12px", borderRadius: "6px", color: "text.primary" }}>
         <IconButton aria-label="edit" sx={{ color: "text.primary", p: "4px" }} onClick={() => handleEditClick()}>
           <EditIcon />
         </IconButton>
-        <IconButton aria-label="delete" onClick={() => deletePlayer(player.id)} sx={{ color: "text.primary", p: "4px" }}>
+        <IconButton aria-label="delete" onClick={() => deleteMatch(match.id)} sx={{ color: "text.primary", p: "4px" }}>
           <Delete />
         </IconButton>
       </Box>

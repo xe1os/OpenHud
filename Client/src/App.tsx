@@ -5,22 +5,23 @@ import { HUD } from './HUD/HUD';
 import { AdminPanel } from './pages/AdminPanel';
 import { LandingPage } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
-import { Matches } from './pages/Matches';
+import { MatchesPage } from './pages/Matches';
 import { PlayersPage } from './pages/Players/PlayersPage';
-import { Teams } from './pages/Teams';
+import { TeamsPage } from './pages/Teams';
 
 export const {GSI, socket} = GSISocket('http://localhost:4000', "update");
 
 export const App = () => {
   const [gameData, setGameData] = useState<CSGO | null>(null);
+  
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<LandingPage/>}>
         <Route path="admin" element={<AdminPanel />}>
-          <Route index element={<Dashboard/>} />
-          <Route path="matches" element={<Matches/>} />
+          <Route index element={<MatchesPage/>} />
+          <Route path="matches" element={<MatchesPage/>} />
           <Route path="players" element={<PlayersPage/>} />
-          <Route path="teams" element={<Teams/>} />
+          <Route path="teams" element={<TeamsPage/>} />
           <Route path="dashboard" element={<Dashboard/>} />
         </Route>,
         <Route path="hud" element={<HUD gameData={gameData}/>} />
