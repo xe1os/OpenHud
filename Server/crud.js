@@ -102,22 +102,47 @@ export const getTeamByName = (name, callback) => {
 };
 
 export const createMatch = (current, left, right, matchType, vetos, callback) => {
-    const sql = `INSERT INTO matches(current,left,right,matchType,vetos) VALUES(?,?,?,?,?)`;
-    db.run(sql, [current, left, right, matchType, vetos], function(err) {
-        callback(err, { id: this.lastID });
+    const sql = `INSERT INTO matches(current, left, right, matchType, vetos) VALUES(?,?,?,?,?)`;
+
+    // Serialize left, right, and vetos to JSON
+    const serializedLeft = JSON.stringify(left);
+    const serializedRight = JSON.stringify(right);
+    const serializedVetos = JSON.stringify(vetos);
+
+    // Convert boolean `current` to integer (0 or 1)
+    const currentValue = current ? 1 : 0;
+
+    db.run(sql, [currentValue, serializedLeft, serializedRight, matchType, serializedVetos], function(err) {
         if (err) {
             console.error(err.message);
+            return callback(err, null);
         }
+        callback(null, { id: this.lastID });
     });
 };
 
 export const readMatches = (callback) => {
     const sql = `SELECT * FROM matches`;
+
     db.all(sql, [], (err, rows) => {
-        callback(err, rows);
         if (err) {
-            return console.error(err.message);
+            console.error(err.message);
+            return callback(err, null);
         }
+
+        // Deserialize and convert current to boolean
+        const matches = rows.map((row) => {
+            return {
+                ...row,
+                current: row.current === 1, // Convert integer to boolean
+                left: JSON.parse(row.left),
+                right: JSON.parse(row.right),
+                vetos: JSON.parse(row.vetos)
+            };
+        });
+        console.log("Matches sent: ", matches);
+
+        callback(null, matches);
     });
 };
 

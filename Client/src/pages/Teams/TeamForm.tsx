@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  Container,  Typography,  TextField,  Button,  Grid2,  Avatar,  List,  ListItem,  ListItemAvatar,  ListItemText,  IconButton,  Paper, Box } from '@mui/material';
-import { Edit, Delete } from '@mui/icons-material';
+import {  Typography,  TextField,  Button, Paper, Box } from '@mui/material';
 import { TeamProps } from './TeamsPage';
 
 interface TeamsFormProps {
@@ -80,8 +79,7 @@ export const TeamsForm = ({team, createTeam, updateTeam, isEditing, onCancel}: T
 
 
   return (
-    <Container maxWidth="md">
-        <Paper sx={{p: 2}}>
+      <Paper sx={{p: 2}}>
         <Typography variant="h6" gutterBottom>
         {isEditing ? `Updating: ${teamName} (${team?.id})` : 'Create Team'}
         </Typography>
@@ -141,7 +139,6 @@ export const TeamsForm = ({team, createTeam, updateTeam, isEditing, onCancel}: T
         {/* Added error message display */}
         {errorMessage && <Typography variant="body2" color="error" sx={{my: 1}}>{errorMessage}</Typography>}
       </Paper>
-    </Container>
   );
 };
 

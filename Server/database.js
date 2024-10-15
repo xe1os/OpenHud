@@ -24,11 +24,11 @@ export let db = new sqlite3.Database(database, (err) => {
         }
         console.log('Matches Table Ready.');
     });
-    // db.run(`DROP TABLE IF EXISTS teams`, (err) => {
+    // db.run(`DROP TABLE IF EXISTS matches`, (err) => {
     //     if (err) {
     //         console.error(err.message);
     //     }
-    //     console.log('Teams Table Dropped.');
+    //     console.log('Teams matches Dropped.');
     // });
 });
 

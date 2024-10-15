@@ -1,11 +1,11 @@
-import {Route, createBrowserRouter, createRoutesFromElements, RouterProvider, useLocation } from 'react-router-dom';
+import {Route, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { CSGO, GSISocket, CSGORaw } from 'csgogsi-socket';
 import { HUD } from './HUD/HUD';
 import { AdminPanel } from './pages/AdminPanel';
 import { LandingPage } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
-import { MatchesPage } from './pages/Matches';
+import { MatchesPage } from './pages/Matches/MatchPage';
 import { PlayersPage } from './pages/Players/PlayersPage';
 import { TeamsPage } from './pages/Teams';
 
