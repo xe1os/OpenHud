@@ -4,7 +4,7 @@ Start of an open source CS2 Custom Hud.
 EXTREMELY EARLY AND EXPERIMENTAL.
 <br/>
 - Styling: TailwindCSS / Material UI / Sass
-- Tech: NodeJS, Express, React, Typescript, Axios, Socketio
+- Tech: NodeJS, Express, React, Typescript, Axios, Socketio, SQLite3
 
 # To Do:
 - Teams API
