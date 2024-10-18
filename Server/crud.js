@@ -101,6 +101,16 @@ export const getTeamByName = (name, callback) => {
     });
 };
 
+export const getTeamLogo = (id, callback) => {
+    const sql = `SELECT logo FROM teams WHERE id = ?`;
+    db.get(sql, [id], (err, row) => {
+        callback(err, row);
+        if (err) {
+            return console.error(err.message);
+        }
+    });
+};
+
 export const createMatch = (current, left, right, matchType, vetos, callback) => {
     const sql = `INSERT INTO matches(current, left, right, matchType, vetos) VALUES(?,?,?,?,?)`;
 
@@ -140,7 +150,7 @@ export const readMatches = (callback) => {
                 vetos: JSON.parse(row.vetos)
             };
         });
-        console.log("Matches sent: ", matches);
+        // console.log("Matches sent: ", matches);
 
         callback(null, matches);
     });
@@ -149,6 +159,16 @@ export const readMatches = (callback) => {
 export const updateMatch = (id, current, left, right, matchType, vetos, callback) => {
     const sql = `UPDATE matches SET current = ?, left = ?, right = ?, matchType = ?, vetos = ? WHERE id = ?`;
     db.run(sql, [current, left, right, matchType, vetos, id], function(err) {
+        callback(err);
+        if (err) {
+            return console.error(err.message);
+        }
+    });
+};
+
+export const updateCurrentMatch = (id, current, callback) => {
+    const sql = `UPDATE matches SET current = ? WHERE id = ?`;
+    db.run(sql, [current, id], function(err) {
         callback(err);
         if (err) {
             return console.error(err.message);

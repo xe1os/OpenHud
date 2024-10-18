@@ -54,6 +54,11 @@ export const MatchesPage = () => {
     });
   }, []);
 
+  const fetchMatches = async () => {
+    const data = await getMatches();
+    setMatches(data);
+  };
+
   const handleCreateMatch = async (match: Match) => {
     setIsLoading(true);
     console.log(match)
@@ -111,7 +116,7 @@ export const MatchesPage = () => {
           {matches.length === 0 && <Typography variant="h6">No matches created</Typography>}
           {matches.map((match: Match, index) => (
             <Grid key={index} size={1}>
-              <MatchCard key={match.id} match={match} deleteMatch={handleDeleteMatch} onEdit={handleEditMatch} />
+              <MatchCard key={match.id} match={match} deleteMatch={handleDeleteMatch} onEdit={handleEditMatch} refreshMatches={fetchMatches} />
             </Grid>
           ))}
         </Grid>

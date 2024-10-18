@@ -14,7 +14,7 @@ const PORT = 4000;
 const io = new Server(server, {
     cors: {
         origin: '*',
-        methods: ['GET', 'POST'], 
+        // methods: ['GET', 'POST'], 
     },
 });
 
@@ -199,6 +199,23 @@ app.get('/teams/:name', (req, res) => {
     });
 });
 
+app.get('/teams/:id/logo', (req, res) => {
+    // GET a team's logo by id
+    API.getTeamLogo(req.params.id, (err, row) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else if (!row) {
+            res.send(null);
+            // console.log(`Team with ID: ${req.params.id} not found`);
+        }
+        else {
+            res.status(200).send(row);
+            // console.log(`Team with ID: ${req.params.id} sent`);
+        }
+    });
+});
+
 app.get('/matches', (req, res) => {
     // GET a match
     API.readMatches((err, rows) => {
@@ -239,6 +256,22 @@ app.put('/matches/:id', (req, res) => {
         }
     });
 });
+
+app.put('/matches/:id/current', (req, res) => {
+    // UPDATE a match's current status
+    const { current } = req.body;
+    API.updateCurrentMatch(req.params.id, current, (err) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.status(201).send(`Updated Match with ID: ${req.params.id}`);
+            console.log(`Updated Match with ID: ${req.params.id}`);
+            current ? (io.emit('match-update', req.params.id)) : (io.emit('match-update', null));
+        }
+    });
+});
+
 
 app.delete('/matches/:id', (req, res) => {
     // DELETE a match

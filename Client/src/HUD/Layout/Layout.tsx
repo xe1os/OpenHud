@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CSGO, Team } from 'csgogsi-socket';
 import { Observed } from '../Players/Observed'
 import { Matchbar } from '../Matchbar/Matchbar';
 import { TeamBox } from '../Players/TeamBox';
+import { Match } from '../../api/interfaces';
+import { SeriesBox } from '../Matchbar/SeriesBox';
 
 interface LayoutProps {
   game: CSGO;
+  match?: Match | null;
 }
 
 /**
@@ -13,8 +16,7 @@ interface LayoutProps {
  * TODO: Fix TeamBox left/right orientation
  */
 
-export const Layout = ({game}: LayoutProps) => {
-  // console.log(game)
+export const Layout = ({game, match}: LayoutProps) => {
   const left = game.map.team_ct.orientation === "left" ? game.map.team_ct : game.map.team_t;
   const right = game.map.team_ct.orientation === "left" ? game.map.team_t : game.map.team_ct;
 
@@ -23,7 +25,8 @@ export const Layout = ({game}: LayoutProps) => {
 
   return (
     <div className='layout'>
-      <Matchbar map={game.map}/>
+      <Matchbar map={game.map} match={match ? match : null} phase={game.phase_countdowns}/>
+      <SeriesBox map={game.map} match={match ? match : null}/>
       <TeamBox team={right} players={rightPlayers} side='right' current={game.player}/>
       <TeamBox team={left} players={leftPlayers} side='left' current={game.player}/>
       <Observed player={game.player}/>
