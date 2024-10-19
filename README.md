@@ -1,4 +1,4 @@
-# Open Hud - Open source CS2 Hud and Admin Panel
+# OpenHud - Open source CS2 Hud and Admin Panel
 Start of an open source CS2 Custom Hud.
 <br/>
 EXTREMELY EARLY AND EXPERIMENTAL.
