@@ -12,17 +12,19 @@ EXTREMELY EARLY AND EXPERIMENTAL.
 - Dashboard API
 - Fully integrate all APIs with HUD
 
-To start:
+# Getting Started:
 
-  Start the GSI server by running `node index.js` in the integrated terminal for the Server folder. This gets the server up and running listening for data from CS2.
-  Run `npm start` in the integrated terminal for the Client folder.
+  - Download this [GSI Config File](https://drive.google.com/file/d/1_GvudI1GroWY8hpBTcqbvNWcbOlf-iRS/view?usp=sharing) and place it in your `steamapps\common\Counter-Strike Global Offensive\game\csgo\cfg`
+  - Start the GSI server by running `node index.js` in the integrated terminal for the Server folder. This gets the server up and running listening for data from CS2.
+  - Run `npm start` in the integrated terminal for the Client folder.
 
 Hopefully it ends up looking very nice and lets a lot of people use it in their streams!
 
-# Custom CS2 Hud
-![Custom CS2 Hud]([https://i.imgur.com/157zIwc.jpeg](https://github.com/lexogrine/cs2-react-hud/raw/main/preview.png))
+# CS2-React-Hud (https://github.com/lexogrine/cs2-react-hud)
+![Custom CS2 Hud](https://github.com/lexogrine/cs2-react-hud/raw/main/preview.png)
 (screenshot from complete version of hud in different software. major parts of the hud still need to be implemented.)
 
 
 # Admin Panel
-![Custom CS2 Hud](https://i.imgur.com/YRswL30.png)
+![AdminPanel/Players](https://i.imgur.com/fSnKhOt.png)
+![AdminPanel/Teams](https://i.imgur.com/N0cPSeH.png)
