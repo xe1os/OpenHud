@@ -20,7 +20,7 @@ To start:
 Hopefully it ends up looking very nice and lets a lot of people use it in their streams!
 
 # Custom CS2 Hud
-![Custom CS2 Hud](https://i.imgur.com/157zIwc.jpeg)
+![Custom CS2 Hud]([https://i.imgur.com/157zIwc.jpeg](https://github.com/lexogrine/cs2-react-hud/raw/main/preview.png))
 (screenshot from complete version of hud in different software. major parts of the hud still need to be implemented.)
 
 
