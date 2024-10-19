@@ -13,11 +13,6 @@ html, body, #root {
     line-height: normal;
 }
 
-
-.light {
-
-}
-
 .dark {
   --background-primary: 5, 25, 35;
   --background-secondary: 15, 44, 62;
