@@ -5,6 +5,7 @@ import { WeaponImage } from '../Weapons/Weapon';
 import { ArmorHelmet, ArmorFull, HealthFull, Bullets, KillIcon, Skull, AssistIcon } from '../assets/Icons';
 import { RoundKills } from '../Helpers';
 import { Avatar } from '../Helpers'
+import { TeamLogo } from '../Matchbar/TeamLogo';
 import { getCountry } from '../countries';
 
 interface PlayerProps {
@@ -41,7 +42,7 @@ export const Observed = ({player}: PlayerProps) => {
         <div className={`observed ${player.team.side}`}>
 			<div className="main_row">
 				<Avatar teamId={player.team.id} steamid={player.steamid} height={140} width={140} showCam={showCam} slot={player.observer_slot} />
-				{/* <TeamLogo team={player.team} height={35} width={35} /> */}
+				<TeamLogo team={player.team} height={35} width={35} />
 				<div className="username_container">
 					<div className="username">{player.name}</div>
 					<div className="real_name">{player.realName}</div>

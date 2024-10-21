@@ -2,6 +2,9 @@ import React from 'react'
 import * as I from 'csgogsi-socket'
 import './players.scss'
 import { RoundKills } from '../Helpers/RoundKills';
+import Armor from '../Indicators/Armor';
+import { Bomb } from '../Indicators';
+import { Defuse } from '../Indicators/Defuse';
 import { Avatar } from '../Helpers/Avatar';
 import { KillIcon, Skull } from '../assets/Icons';
 import { WeaponImage } from '../Weapons/Weapon';
@@ -106,9 +109,9 @@ export const AllPlayers = ({player, isObserved}: IProps) => {
           <div className={`hp_bar ${player.state.health <= 20 ? 'low' : ''}`} style={{ width: `${player.state.health}%` }}></div>
           <div className="row">
             <div className="armor_and_utility">
-              {/* <Bomb player={player} />
+              <Bomb player={player} />
               <Armor health={player.state.health} armor={player.state.armor} helmet={player.state.helmet} />
-              <Defuse player={player} /> */}
+              <Defuse player={player} />
             </div>
             <div className="money">${player.state.money}</div>
             {zeus ? <WeaponImage className={`zeus ${player.team.orientation}`} weapon="taser" active={zeus.state === "active"} /> : null}

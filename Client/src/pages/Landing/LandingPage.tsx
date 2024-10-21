@@ -1,7 +1,7 @@
 import { Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import BackgroundVideo from '../../assets/BGVideo_blurred.mp4'
+import BackgroundVideo from '../../assets/Background.mp4'
 import { Logo } from '../Sidebar/AccountToggle';
 import { Image } from '@mui/icons-material';
 
